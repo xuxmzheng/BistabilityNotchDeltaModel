@@ -29,4 +29,4 @@ Authors: Yuxin Liang, Ling Xue, Kun Zhao, Xiaoming Zheng
 | Fig 10[b] | `compare_full_QSS_p=2.png` | `compare_full_QSS_p=2.jl` |
 | Table 5 Strategy 1 |  | `phenotype_sweep_strategy1.jl` |
 | Table 5 Strategy 2 |  | `phenotype_sweep_strategy2.jl` |\caption{Figure and table generation summary.}
-\end{table}
+
