@@ -1,6 +1,8 @@
 using DifferentialEquations
 using LinearAlgebra
+using LaTeXStrings
 import Plots
+_t_start = time()   # --- start runtime timer ---
 
 Plots.gr()   # Force GR backend
 
@@ -51,10 +53,10 @@ function run_phase_diagram_with_arrows()
         [3500,  0,    300]
     ]
 
-    colors = [:blue, :blue, :blue, :blue,
-              :red,  :red,  :red,
-              :blue, :red,
-              :blue, :red,  :red]
+    colors = [:red, :red, :red, :red,
+              :blue, :blue, :blue,
+              :red, :blue,
+              :red, :blue, :blue]
 
     tspan = (1.0, 500000.0)
 
@@ -62,8 +64,10 @@ function run_phase_diagram_with_arrows()
     # Plot setup
     # -------------------------------
     plt = Plots.plot(
-        xlabel = "N",
-        ylabel = "D",
+        xlabel = L"N",
+        ylabel = L"D",
+        xguidefontsize = 28,
+        yguidefontsize = 28,
         xlims = (0, 6300),
         ylims = (0, 5000),
         legend = (0.55, 0.85),
@@ -85,9 +89,9 @@ function run_phase_diagram_with_arrows()
 
         label_text = ""
         if i == 1
-            label_text = "Receiver basin"
-        elseif i == 5
             label_text = "Sender basin"
+        elseif i == 5
+            label_text = "Receiver basin"
         end
 
         Plots.plot!(plt, N_vals, D_vals,
@@ -146,17 +150,17 @@ function run_phase_diagram_with_arrows()
     E3 = [2448.16352009529, 333.281327303735]
 
     Plots.scatter!(plt, [E1[1]], [E1[2]],
-        markersize=8, color=:blue, label="E₁")
+        markersize=8, color=:red, label="E₁")
 
     Plots.scatter!(plt, [E2[1]], [E2[2]],
         markersize=8, color=:black, label="E₂")
 
     Plots.scatter!(plt, [E3[1]], [E3[2]],
-        markersize=8, color=:red, label="E₃")
+        markersize=8, color=:blue, label="E₃")
 
-    Plots.annotate!(plt, 630, 2700, Plots.text("E₁", 20, :blue))
+    Plots.annotate!(plt, 630, 2700, Plots.text("E₁", 20, :red))
     Plots.annotate!(plt, 1600, 900, Plots.text("E₂", 20, :black))
-    Plots.annotate!(plt, 2500, 700, Plots.text("E₃", 20, :red))
+    Plots.annotate!(plt, 2500, 700, Plots.text("E₃", 20, :blue))
 
     Plots.display(plt)
     Plots.savefig(plt, "phase_plane_p=1.png")
@@ -165,3 +169,4 @@ function run_phase_diagram_with_arrows()
 end
 
 run_phase_diagram_with_arrows()
+println("Running time: ", round(time() - _t_start, digits=2), " seconds")

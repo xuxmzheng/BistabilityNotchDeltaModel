@@ -1,5 +1,7 @@
 using CairoMakie
+using LaTeXStrings
 using Roots
+_t_start = time()   # --- start runtime timer ---
 
 # --- 1. Parameters ---
 const p        = 2
@@ -100,14 +102,14 @@ bm_D_c = clean_branch(b_mid_D)
 fig = Figure(size = (1000, 750), fontsize = 26, figure_padding = (20, 50, 20, 20))
 
 ax = Axis(fig[1, 1],
-          title = "Bifurcation (p=$p, Next=$Next_val)",
-          xlabel = "Dext",
+          title = L"\text{Bifurcation } (p=%$p,\ N_{ext}=%$Next_val)",
+          xlabel = L"D_{ext}",
           ylabel = "molecules",
-          titlesize = 52,
-          xlabelsize = 52,
-          ylabelsize = 52,
-          xticklabelsize = 42,
-          yticklabelsize = 42)
+          titlesize = 62,
+          xlabelsize = 62,
+          ylabelsize = 62,
+          xticklabelsize = 48,
+          yticklabelsize = 48)
 
 CairoMakie.xlims!(ax, 0, 3000)
 CairoMakie.ylims!(ax, 0, 9000)
@@ -140,3 +142,4 @@ Legend(fig[1, 1], leg_el, ["Notch", "Delta", "Unstable"],
 
 display(fig)
 save("bifurcation_p2_Next500_smallwindow.png", fig)
+println("Running time: ", round(time() - _t_start, digits=2), " seconds")

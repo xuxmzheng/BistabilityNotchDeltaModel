@@ -1,5 +1,7 @@
 using CairoMakie
+using LaTeXStrings
 using Roots
+_t_start = time()   # --- start runtime timer ---
 
 # --- 1. Parameters ---
 const p        = 2
@@ -83,14 +85,14 @@ begin
     
     # Added yscale = log10 here
     ax = Axis(fig[1, 1], 
-              title = "Bifurcation Trace (p=$p, Next=$Next_val)", 
-              xlabel = "Dext", ylabel = "molecules",
+              title = L"\text{Bifurcation } (p=%$p,\ N_{ext}=%$Next_val)",
+              xlabel = L"D_{ext}", ylabel = "molecules",
               xscale = log10, yscale = log10, aspect = 4/3,
-              titlesize = 52,
-              xlabelsize = 52, # Larger xlabel
-              ylabelsize = 52, # Larger ylabel
-              xticklabelsize = 52, 
-              yticklabelsize = 52)           
+              titlesize = 62,
+              xlabelsize = 62, # Larger xlabel
+              ylabelsize = 62, # Larger ylabel
+              xticklabelsize = 58,
+              yticklabelsize = 58)
 
     ax.xticks = ([10^2, 10^4, 10^6, 10^8, 10^10], ["10²", "10⁴", "10⁶", "10⁸", "10¹⁰"])
     ax.yticks = ([10^-2, 1, 10^2, 10^4, 10^6], ["10⁻²", "10⁰", "10²", "10⁴", "10⁶"])
@@ -130,3 +132,4 @@ Legend(fig, leg_elements, ["Notch", "Delta", "Unstable"], "",
     display(fig)
     save("bifurcation_loglog_p=2_Next=12000.png", fig)
 end
+println("Running time: ", round(time() - _t_start, digits=2), " seconds")

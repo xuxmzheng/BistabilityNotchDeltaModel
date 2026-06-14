@@ -1,5 +1,6 @@
 using Random
 using ProgressMeter
+_t_start = time()   # --- start runtime timer ---
 
 # ----------------------------
 # 1. Global Constants
@@ -132,3 +133,4 @@ if res_best > 0
     println(res_cases[1][1:6])
 end
 println("="^40)
+println("Running time: ", round(time() - _t_start, digits=2), " seconds")

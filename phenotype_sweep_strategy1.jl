@@ -15,6 +15,7 @@
 # =====================================================================================
 
 using Roots, Printf, Random, ProgressMeter, UUIDs
+_t_start = time()   # --- start runtime timer ---
 
 # --- 1. Sweep Function ---
 function run_robust_parameter_sweep(samples=100000)
@@ -177,3 +178,4 @@ function run_robust_parameter_sweep(samples=100000)
 end
 
 run_robust_parameter_sweep(Int(1e6))
+println("Running time: ", round(time() - _t_start, digits=2), " seconds")

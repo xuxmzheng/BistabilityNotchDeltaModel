@@ -1,5 +1,7 @@
 using CairoMakie
+using LaTeXStrings
 using Roots
+_t_start = time()   # --- start runtime timer ---
 
 # --- 1. Parameters ---
 const p        = 2
@@ -82,10 +84,10 @@ bm_N_c, bm_D_c = clean_branch(b_mid_N), clean_branch(b_mid_D)
 begin
     fig = Figure(size = (1000, 750), fontsize = 26, figure_padding = (20, 80, 20, 20))
     ax = Axis(fig[1, 1], 
-              title = "Bifurcation Regions (p=$p, Next=$Next_val)", 
-              xlabel = "Dext", ylabel = "molecules",
+              title = L"\text{Bifurcation Regions } (p=%$p,\ N_{ext}=%$Next_val)",
+              xlabel = L"D_{ext}", ylabel = "molecules",
               yscale = log10,
-              titlesize = 42, xlabelsize = 42, ylabelsize = 42,
+              titlesize = 42, xlabelsize = 62, ylabelsize = 62,
               xticklabelsize = 32, yticklabelsize = 32,
               # --- REMOVE GRID LINES ---
               xgridvisible = false, 
@@ -97,10 +99,8 @@ begin
     CairoMakie.ylims!(ax, 80, 12000) 
     CairoMakie.xlims!(ax, 600, 700)
 
-    # Shading vertical regions
-    CairoMakie.vspan!(ax, 600, 663, color = (:red, 0.1))    
-    CairoMakie.vspan!(ax, 663, 676.5, color = (:yellow, 0.1)) 
-    CairoMakie.vspan!(ax, 676.5, 700, color = (:lime, 0.1))   
+    # Thick black vertical lines separating the S | SR | RR regions
+    CairoMakie.vlines!(ax, [663.0, 676.5]; color = :black, linewidth = 5)
 
     # Labels at the bottom
     text_y = 1200
@@ -131,5 +131,7 @@ begin
            tellheight = false) 
 
     display(fig)
-    save("bifurcation_special_p2_lower.png", fig)
+    save("bifurcation_special_p2_lower_BW.png", fig)
 end
+
+println("Running time: ", round(time() - _t_start, digits=2), " seconds")

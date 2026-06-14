@@ -1,5 +1,7 @@
 using CairoMakie
+using LaTeXStrings
 using Roots
+_t_start = time()   # --- start runtime timer ---
 
 function run_bifurcation()
 
@@ -108,8 +110,8 @@ function run_bifurcation()
     # ax = Axis(fig[1,1], xlabel="Dext", ylabel="molecules")
 
     ax = Axis(fig[1, 1], 
-        title = "Bifurcation (p=$p, Next=$Next_val)", 
-        xlabel = "Dext", ylabel = "molecules",
+        title = L"\text{Bifurcation } (p=%$p,\ N_{ext}=%$Next_val)",
+        xlabel = L"D_{ext}", ylabel = "molecules",
         titlesize = 52,
         xlabelsize = 52, # Larger xlabel
         ylabelsize = 52, # Larger ylabel
@@ -124,8 +126,25 @@ function run_bifurcation()
     lines!(ax, b_mid_N, color=(:blue,0.4), linestyle=:dash, linewidth=3)
     lines!(ax, b_mid_D, color=(:red,0.4),  linestyle=:dash, linewidth=3)
 
+    leg_el = [
+        LineElement(color = :blue, linewidth = 4),
+        LineElement(color = :red, linewidth = 4),
+        LineElement(color = :black, linestyle = :dash, linewidth = 3)
+    ]
+
+    Legend(fig[1, 1], leg_el, ["Notch", "Delta", "Unstable"],
+           labelsize = 52,
+           patchsize = (50, 20),
+           halign = :right,
+           valign = :top,
+           tellwidth = false,
+           tellheight = false,
+           margin = (10, 10, 10, 10),
+           backgroundcolor = (:white, 0.8))
+
     display(fig)
     save("bifur_SS05.png", fig)
 end
 
 run_bifurcation()
+println("Running time: ", round(time() - _t_start, digits=2), " seconds")
